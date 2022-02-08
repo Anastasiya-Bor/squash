@@ -1,0 +1,31 @@
+
+button {
+    width: 75px;
+    background-color: rgb(238, 230, 220);
+}
+
+.game_field {
+    width: 500px;
+    height: 600px;
+    background-color: rgb(166, 198, 233);
+    position: absolute;
+}
+
+.platform {
+    width: 85px;
+    height: 10px;
+    background-color: rgb(53, 39, 144);
+    position: absolute;
+    top: 590px;
+    left: 0px;
+}
+
+.ball {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: rgb(255, 255, 0);
+    border-radius: 15px;
+    top: 10px;
+    left: 10px;
+}
