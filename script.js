@@ -13,9 +13,11 @@ function squash() {
 
   startButton.addEventListener("click", startGame);
 
+  let isFirstStart = true;
+
   function startGame() {
     movePlatform();
-    downMoveBall();
+    moveBall(isFirstStart);
   }
 
   function movePlatform() {
@@ -52,90 +54,133 @@ function squash() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function downMoveBall() {
-    let possibleBallAppearancePositionLeft = 1;
-    let possibleBallAppearancePositionRight = widthField - widthBall;
+  function moveBall(isFirstStart) {
+    let extremeStartingPositionBallOnLeft = 1;
+    let extremeStartingPositionBallOnRight = widthField - widthBall;
     let directionLeft = -1;
     let directionRight = 1;
-    let stopCorrectionBall = 3;
+    let correctionPositionBall = 3;
 
-    let startPositionBall = getRandomIntInclusive(
-      possibleBallAppearancePositionLeft,
-      possibleBallAppearancePositionRight
-    );
-    ball.style.top = possibleBallAppearancePositionLeft + "px";
-    ball.style.left = startPositionBall + "px";
+    if (isFirstStart) {
+      let startPositionBall = getRandomIntInclusive(
+        extremeStartingPositionBallOnLeft,
+        extremeStartingPositionBallOnRight
+      );
+      ball.style.top = extremeStartingPositionBallOnLeft + "px";
+      ball.style.left = startPositionBall + "px";
+    }
 
     let directionBall = getRandomIntInclusive(directionLeft, directionRight);
     let ballDownDirection = true;
 
     let move = setInterval(() => {
-      let positionBallX = ball.offsetLeft;
-      let positionBallY = ball.offsetTop;
-
       if (ballDownDirection) {
-        if (directionBall == 1) {
-          //направление сверху вниз
-          ball.style.top = positionBallY + speedBall + "px";
-          ball.style.left = positionBallX + speedBall + "px";
-        } else if (directionBall == 0) {
-          ball.style.top = positionBallY + speedBall + "px";
-        } else if (directionBall == -1) {
-          ball.style.top = positionBallY + speedBall + "px";
-          ball.style.left = positionBallX - speedBall + "px";
-        }
-
-        let positionPlatformY = platform.offsetTop;
-        let positionPlatformX = platform.offsetLeft;
-
-        if (positionBallX >= widthField - widthBall) {
-          //отбивание от левой и правой стенки
-          directionBall = -1;
-        } else if (positionBallX <= 0) {
-          directionBall = 1;
-        } else if (
-          //удар о платформу
-          positionBallY + heightBall >= positionPlatformY &&
-          positionBallX >= positionPlatformX &&
-          positionBallX <= positionPlatformX + widthPlatform
-        ) {
-          upMoveBall();
-          ballDownDirection = false;
-        } else if (
-          //остановка мяча внизу, удар о нижнюю стенку
-          positionBallY >=
-          heightField - heightBall - stopCorrectionBall
-        ) {
-          ball.style.background = "red";
-          speedBall = 0;
-        }
+        downMoveBall();
       } else {
-        //полет вверх
         upMoveBall();
       }
     }, 10);
-  }
 
-  function upMoveBall() {
-    // let positionPlatformX = platform.offsetLeft;
-    let firstPartPlatform = platform.offsetLeft + widthPlatform / 2;
-    let secondPartPlatform =
-      platform.offsetLeft + widthPlatform / 2 - widthPlatform;
+    function downMoveBall() {
+      let positionBallX = ball.offsetLeft;
+      let positionBallY = ball.offsetTop;
+      let positionPlatformY = platform.offsetTop;
+      let positionPlatformX = platform.offsetLeft;
 
-    if ((ball.offsetLeft = firstPartPlatform)) {
-      ball.style.top = ball.offsetTop - speedBall + "px";
-      ball.style.left = ball.offsetLeft - speedBall + "px";
-      console.log("полет влево");
-    } else if ((ball.offsetLeft = secondPartPlatform)) {
-      ball.style.top = ball.offsetTop - speedBall + "px";
-      ball.style.left = ball.offsetLeft + speedBall + "px";
-      console.log("полет вправо");
+      //направление сверху вниз
+      if (directionBall == 1) {
+        ball.style.top = positionBallY + speedBall + "px";
+        ball.style.left = positionBallX + speedBall + "px";
+      } else if (directionBall == 0) {
+        ball.style.top = positionBallY + speedBall + "px";
+      } else if (directionBall == -1) {
+        ball.style.top = positionBallY + speedBall + "px";
+        ball.style.left = positionBallX - speedBall + "px";
+      }
+
+
+      //отбивание от левой и правой стенки
+      if (positionBallX >= widthField - widthBall) {
+        directionBall = -1;
+      } else if (positionBallX <= 0) {
+        directionBall = 1;
+      } else if (
+        //удар о платформу
+        positionBallY + heightBall >= positionPlatformY &&
+        positionBallX >= positionPlatformX &&
+        positionBallX <= positionPlatformX + widthPlatform
+      ) {
+        ballDownDirection = false;
+      } else if (
+        //остановка мяча внизу, удар о нижнюю стенку
+        positionBallY >=
+        heightField - heightBall - correctionPositionBall
+      ) {
+        ball.style.background = "red";
+        speedBall = 0;
+      }
     }
 
-    if (ball.offsetTop <= 0) {
-      ballDownDirection = true;
-      clearInterval(move);
-      downMoveBall();
+    function upMoveBall() {
+      // Обновляем координаты мяча и ракетки
+      let positionBallX = ball.offsetLeft;
+      let positionBallY = ball.offsetTop;
+      let positionPlatformY = platform.offsetTop;
+      let positionPlatformX = platform.offsetLeft;
+
+      // Определяем зоны ракетки касание мяча к которым задает соответсвующее направление полета
+      let leftPartPlatformLeftBorder = positionPlatformX;
+      let centralPartPlatformLeftBorder =
+        leftPartPlatformLeftBorder + widthPlatform / 3;
+      let centralPartPlatformLRightBorder =
+        centralPartPlatformLeftBorder + widthPlatform / 3;
+      let rightPartPlatformLRightBorder =
+        centralPartPlatformLRightBorder + widthPlatform / 3;
+
+      // Определяем направление полета
+      if (
+        positionBallY + heightBall >= positionPlatformY &&
+        positionBallX + widthBall >= leftPartPlatformLeftBorder &&
+        positionBallX + widthBall < centralPartPlatformLeftBorder
+      ) {
+        directionBall = -1;
+      } else if (
+        positionBallY + heightBall >= positionPlatformY &&
+        positionBallX + widthBall >= centralPartPlatformLeftBorder &&
+        positionBallX + widthBall <= centralPartPlatformLRightBorder
+      ) {
+        directionBall = 0;
+      } else if (
+        positionBallY + heightBall >= positionPlatformY &&
+        positionBallX > centralPartPlatformLRightBorder &&
+        positionBallX <= rightPartPlatformLRightBorder
+      ) {
+        directionBall = 1;
+      }
+
+      // Двигаем мячик в соответствии с направлением
+      if (directionBall == -1) {
+        ball.style.top = ball.offsetTop - speedBall + "px";
+        ball.style.left = ball.offsetLeft - speedBall + "px";
+      } else if (directionBall == 0) {
+        ball.style.top = ball.offsetTop - speedBall + "px";
+        ball.style.left = ball.offsetLeft + "px";
+      } else if (directionBall == 1) {
+        ball.style.top = ball.offsetTop - speedBall + "px";
+        ball.style.left = ball.offsetLeft + speedBall + "px";
+      }
+
+      // Обрабатываем касание мячом стенок
+      if (positionBallX >= widthField - widthBall) {
+        directionBall = -1;
+      } else if (positionBallX <= 0) {
+        directionBall = 1;
+      } else if (positionBallY <= 0) {
+        clearInterval(move);
+        ballDownDirection = true;
+        isFirstStart = false;
+        moveBall(isFirstStart);
+      }
     }
   }
 }
