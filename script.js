@@ -1,4 +1,9 @@
 function squash() {
+  let timerShow = document.getElementById("timer");
+  let sec = 0;
+  let min = 0;
+  let hrs = 0;
+  let t;
   let platform = document.getElementById("platform");
   let field = document.getElementById("field");
   let startButton = document.getElementById("btn");
@@ -16,8 +21,36 @@ function squash() {
   let isFirstStart = true;
 
   function startGame() {
+    timer();
     movePlatform();
     moveBall(isFirstStart);
+  }
+
+  function timer() {
+    t = setTimeout(add, 1000);
+
+    function tick() {
+      sec++;
+      if (sec >= 60) {
+        sec = 0;
+        min++;
+      }
+      if (min >= 60) {
+        min = 0;
+        hrs++;
+      }
+    }
+
+    function add() {
+      tick();
+      timerShow.textContent =
+        (hrs > 9 ? hrs : "0" + hrs) +
+        ":" +
+        (min > 9 ? min : "0" + min) +
+        ":" +
+        (sec > 9 ? sec : "0" + sec);
+      timer();
+    }
   }
 
   function movePlatform() {
@@ -48,7 +81,7 @@ function squash() {
     });
   }
 
-  function getRandomIntInclusive(min, max) {
+  function _getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -62,7 +95,7 @@ function squash() {
     let correctionPositionBall = 3;
 
     if (isFirstStart) {
-      let startPositionBall = getRandomIntInclusive(
+      let startPositionBall = _getRandomIntInclusive(
         extremeStartingPositionBallOnLeft,
         extremeStartingPositionBallOnRight
       );
@@ -70,7 +103,7 @@ function squash() {
       ball.style.left = startPositionBall + "px";
     }
 
-    let directionBall = getRandomIntInclusive(directionLeft, directionRight);
+    let directionBall = _getRandomIntInclusive(directionLeft, directionRight);
     let ballDownDirection = true;
 
     let move = setInterval(() => {
@@ -98,7 +131,6 @@ function squash() {
         ball.style.left = positionBallX - speedBall + "px";
       }
 
-
       //отбивание от левой и правой стенки
       if (positionBallX >= widthField - widthBall) {
         directionBall = -1;
@@ -118,6 +150,7 @@ function squash() {
       ) {
         ball.style.background = "red";
         speedBall = 0;
+        clearInterval(t);
       }
     }
 

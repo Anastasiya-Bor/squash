@@ -1,20 +1,20 @@
 
 button {
-    width: 75px;
-    background-color: rgb(238, 230, 220);
+    width: 150px;
+    background-color: rgb(233, 203, 167);
 }
 
 .game_field {
     width: 500px;
     height: 600px;
-    background-color: rgb(166, 198, 233);
+    background-image: url(images/pngtree-p2stars.jpg);
     position: absolute;
 }
 
 .platform {
     width: 85px;
     height: 10px;
-    background-color: rgb(53, 39, 144);
+    background-color: rgb(20, 219, 56);
     position: absolute;
     top: 590px;
     left: 0px;
