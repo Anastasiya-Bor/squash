@@ -1,31 +1,49 @@
-
-button {
-    width: 150px;
-    background-color: rgb(233, 203, 167);
+.game .controlPanel {
+  display: flex;
 }
 
-.game_field {
-    width: 500px;
-    height: 600px;
-    background-image: url(images/pngtree-p2stars.jpg);
-    position: absolute;
+.game .controlPanel .navigation button {
+  width: 150px;
+  background-color: rgb(233, 203, 167);
+  margin-right: 15px;
+  
 }
 
-.platform {
-    width: 85px;
-    height: 10px;
-    background-color: rgb(20, 219, 56);
-    position: absolute;
-    top: 590px;
-    left: 0px;
+.game .controlPanel .navigation #timer {
+  height: 20px;
+  margin-bottom: 10px;
 }
 
-.ball {
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    background: rgb(255, 255, 0);
-    border-radius: 15px;
-    top: 10px;
-    left: 10px;
+.game .controlPanel #message {
+  flex-direction: row;
+  color: rgb(240, 13, 13);
+  font-size: 25px;
 }
+
+
+.game .game_field {
+  width: 500px;
+  height: 600px;
+  background-image: url(images/pngtree-p2stars.jpg);
+  position: absolute;
+}
+
+.game .game_field .platform {
+  width: 85px;
+  height: 10px;
+  background-color: rgb(20, 219, 56);
+  position: absolute;
+  top: 590px;
+  left: 0px;
+}
+
+.game .game_field .ball {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  background: rgb(255, 255, 0);
+  border-radius: 15px;
+  top: 10px;
+  left: 10px;
+}
+

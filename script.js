@@ -4,6 +4,7 @@ function squash() {
   let min = 0;
   let hrs = 0;
   let t;
+  let message = document.getElementById("message");
   let platform = document.getElementById("platform");
   let field = document.getElementById("field");
   let startButton = document.getElementById("btn");
@@ -81,6 +82,26 @@ function squash() {
     });
   }
 
+  function saveRecord() {
+    if (localStorage.length === 0) {
+      localStorage.setItem("record", timerShow.textContent);
+      showRecord();
+    } else if (localStorage.getItem("record") < timerShow.textContent) {
+      localStorage.setItem("record", timerShow.textContent);
+      showRecord();
+    } else {
+      showTimeSession();
+    }
+  }
+
+  function showRecord() {
+    message.textContent = `This is a new record! ${timerShow.textContent}`;
+  }
+
+  function showTimeSession() {
+    message.textContent = `You can do better! ${timerShow.textContent}`;
+  }
+
   function _getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -151,6 +172,8 @@ function squash() {
         ball.style.background = "red";
         speedBall = 0;
         clearInterval(t);
+        clearInterval(move);
+        saveRecord();
       }
     }
 
