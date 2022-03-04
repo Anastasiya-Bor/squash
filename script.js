@@ -1,4 +1,5 @@
 function squash() {
+  //Привет, разработчикам!
   let platform = document.getElementById("platform");
   let field = document.getElementById("field");
   let startButton = document.getElementById("btn");
