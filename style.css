@@ -16,8 +16,9 @@
 
 .game .controlPanel #message {
   flex-direction: row;
-  color: rgb(240, 13, 13);
+  color: rgb(127, 21, 214);
   font-size: 25px;
+  font-weight: bold;
 }
 
 
@@ -31,7 +32,7 @@
 .game .game_field .platform {
   width: 85px;
   height: 10px;
-  background-color: rgb(20, 219, 56);
+  background-color: rgb(21, 214, 24);
   position: absolute;
   top: 590px;
   left: 0px;
