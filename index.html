@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" type="text/css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <title>Breakout</title>
-</head>
-<body>
-  <div class="game">
-        <button id="btn">START</button>
-        <div class="game_field" id="field">
-            <div class="platform" id="platform"></div>
-            <div class="ball" id="ball"></div>
+  </head>
+  <body>
+    <div class="game">
+      <div class="controlPanel">
+        <div class="navigation">
+          <button id="btn">START</button>
+          <div id="timer"><time>00:00:00</time></div>
         </div>
+        <div id="message"></div>
+      </div>
+      <div class="game_field" id="field">
+        <div class="platform" id="platform"></div>
+        <div class="ball" id="ball"></div>
+      </div>
     </div>
- <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
