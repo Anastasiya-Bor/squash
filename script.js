@@ -1,8 +1,8 @@
 function squash() {
   let timerShow = document.getElementById("timer");
-  let sec = 0;
-  let min = 0;
-  let hrs = 0;
+  let sec;
+  let min;
+  let hrs;
   let t;
   let message = document.getElementById("message");
   let platform = document.getElementById("platform");
@@ -16,13 +16,17 @@ function squash() {
   let widthBall = ball.getBoundingClientRect().width;
   let heightField = field.getBoundingClientRect().height;
   let heightBall = ball.getBoundingClientRect().height;
-  let speedBall = 1;
-  
+  let speedBall;
+
   startButton.addEventListener("click", startGame);
 
   let isFirstStart = true;
 
   function startGame() {
+    sec = 0;
+    min = 0;
+    hrs = 0;
+    timerShow.textContent = "00" + ":" + "00" + ":" + "00";
     timer();
     movePlatform();
     moveBall(isFirstStart);
@@ -30,6 +34,7 @@ function squash() {
   }
 
   function timer() {
+
     t = setTimeout(add, 1000);
 
     function tick() {
@@ -116,6 +121,9 @@ function squash() {
     let directionLeft = -1;
     let directionRight = 1;
     let correctionPositionBall = 3;
+    speedBall = 1;
+
+    ball.style.background = "rgb(255, 255, 0)";
 
     if (isFirstStart) {
       let startPositionBall = _getRandomIntInclusive(
@@ -177,6 +185,7 @@ function squash() {
         clearInterval(move);
         saveRecord();
         startButton.disabled = false;
+        isFirstStart = true;
       }
     }
 
