@@ -31,6 +31,7 @@ function squash() {
     movePlatform();
     moveBall(isFirstStart);
     startButton.disabled = true;
+    message.textContent = '';
   }
 
   function timer() {
